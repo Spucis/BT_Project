@@ -6,7 +6,7 @@ import lxml
 from lxml import etree
 from dbus.mainloop.glib import DBusGMainLoop
 
-DBusGMainLoop(set_as_default=True)
+# DBusGMainLoop(set_as_default=True)
 
 class BT_Manager:
     # Open a connection to the SystemBus
@@ -22,14 +22,15 @@ class BT_Manager:
     def set_UUIDsDict(self):
         with open('/home/spucis/Desktop/Alessio/Bluetooth/BT_Project/BT_Utils/UUIDs.txt') as UUIDs:
             return json.load(UUIDs)
-
+    
+    # Build a proxy for the Adapter
     def get_AdapterProxy(self):
-        # Build a proxy for the Adapter
         return self.__bus.get_object("org.bluez", "/org/bluez/hci0") 
 
     def get_AdapterProperties(self):
         return self.__adapter_proxy.GetAll("org.bluez.Adapter1", dbus_interface="org.freedesktop.DBus.Properties")
-    
+
+    # Prop -> a dictionary that contains the properties that i want to print    
     def print_Properties(self, Prop):
         for k, v in Prop.items():
             if(k == 'UUIDs'):
@@ -98,12 +99,10 @@ class BT_Manager:
         if(self.__devs_info != None):
         
             print("I've found some devices! Here they are!:\n")
-
             i = 0
             for k, v in self.__devs_info.items():
                 print("[" + str(i) + "] " + "- Alias: " + v + ", Address: " + k + "\n")
                 i = i + 1
-
             num = input("Type the number of the device you are interested in: ")
 
             self.set_ChosenDev(int(num))

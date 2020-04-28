@@ -1,7 +1,11 @@
 import BT_Utils
 from BT_Utils import BT_Manager
+from BT_Utils import BT_GUI
 
 BM = BT_Manager.BT_Manager()
+
+win = BT_GUI.myGUI()
+
 
 print("Hello BT User!\n")
 
